@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1,  viewport-fit=cover">
+  <title>IVS Admission Registration Form</title>
+
+  <link rel="stylesheet" href="styles.css"/>
+
+  <!-- PDF libs -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <form id="admissionForm">
+      <!-- ================= PAGE 1 ================= -->
+      <div class="page" id="page1">
+        <!-- NEW: single banner image -->
+        <div class="header-banner">
+          <img src="img/ivs-banner.png"
+              alt="IQRA Virtual School — Al Furqan Children Academy"
+              loading="eager"
+              decoding="sync"
+              crossorigin="anonymous" />
+        </div>
+
+        <h1 class="title">Tution Registration <span class="title-accent">Form</span></h1>
+
+        <div class="meta meta--top">
+          <div class="field-stack">
+            <div class="stack-label">SESSION:</div>
+            <div class="stack-value">2025–26</div>
+            <div class="stack-underline"></div>
+          </div>
+
+          <div class="field-stack">
+            <div class="stack-label">DATE OF REGISTRATION</div>
+            <div class="date-boxes" id="regBoxes">
+              <input class="box" maxlength="1" id="rb1" data-next="rb2" inputmode="numeric" />
+              <input class="box" maxlength="1" id="rb2" data-next="rb3" data-prev="rb1" inputmode="numeric" />
+              <span class="slash">/</span>
+              <input class="box" maxlength="1" id="rb3" data-next="rb4" data-prev="rb2" inputmode="numeric" />
+              <input class="box" maxlength="1" id="rb4" data-next="rb5" data-prev="rb3" inputmode="numeric" />
+              <span class="slash">/</span>
+              <input class="box" maxlength="1" id="rb5" data-next="rb6" data-prev="rb4" inputmode="numeric" />
+              <input class="box" maxlength="1" id="rb6" data-next="rb7" data-prev="rb5" inputmode="numeric" />
+              <input class="box" maxlength="1" id="rb7" data-next="rb8" data-prev="rb6" inputmode="numeric" />
+              <input class="box" maxlength="1" id="rb8" data-prev="rb7" inputmode="numeric" />
+            </div>
+            <input type="hidden" id="regDate" name="regDate" />
+          </div>
+        </div>
+
+        <section class="section">
+          <h3>STUDENT INFORMATION</h3>
+          <div class="content">
+            <div class="grid cols-2">
+              <div><div class="label">Student Name</div><input id="studentName" name="studentName" class="input" required></div>
+              <div><div class="label">Father / Mother Name</div><input id="fatherName" name="fatherName" class="input"></div>
+              <div><div class="label">Date of Birth</div><input id="dob" name="dob" class="input" type="date"></div>
+              <div>
+                <div class="label">Gender</div>
+                <div class="inline">
+                  <label><input type="radio" name="gender" value="Male"> Male</label>
+                  <label><input type="radio" name="gender" value="Female"> Female</label>
+                </div>
+              </div>
+              <div><div class="label">Guardian WhatsApp #</div><input id="guardianWhatsapp" name="guardianWhatsapp" class="input" placeholder="+92-xxx-xxxxxxx"></div>
+              <div><div class="label">Guardian CNIC # / Passport Number</div>
+              <input id="guardianId" name="guardianId" class="input" placeholder="Enter CNIC (xxxxx-xxxxxxx-x) or Passport Number">
+              </div>
+              <div><div class="label">Religion</div><input id="religion" name="religion" class="input"></div>
+              <div><div class="label">Father Occupation</div><input id="fOcc" name="fOcc" class="input"></div>
+              <div><div class="label">Nationality</div><input id="nation" name="nation" class="input"></div>
+            </div>
+
+            <hr class="sep"/>
+
+           <div class="label">Grade:</div>
+            <select id="grade" name="grade" class="input" style="margin-bottom:10px;">
+             <option value="">Select Grade</option>
+             <option value="KG-1">KG-1</option>
+             <option value="KG-2">KG-2</option>
+             <option value="Grade 1">Grade 1</option>
+             <option value="Grade 2">Grade 2</option>
+             <option value="Grade 3">Grade 3</option>
+             <option value="Grade 4">Grade 4</option>
+             <option value="Grade 5">Grade 5</option>
+             <option value="Grade 6">Grade 6</option>
+             <option value="Grade 7">Grade 7</option>
+             <option value="Grade 8(Fed)">Grade 8 (Fed)</option>
+             <option value="Grade 8(IGCSE)">Grade 8 (IGCSE)</option>
+             <option value="Grade 9(Fed)">Grade 9 (Fed)</option>
+             <option value="Grade 9(IGCSE)">Grade 9 (IGCSE)</option>
+             <option value="Grade 10(Fed)">Grade 10 (Fed)</option>
+             <option value="Grade 10(IGCSE)">Grade 10 (IGCSE)</option>
+             <option value="Grade 11(Fed)">Grade 11 (Fed)</option>
+             <option value="Grade 11(IGCSE)">Grade 11 (IGCSE)</option>
+             <option value="Grade 12(Fed)">Grade 12 (Fed)</option>
+             <option value="Grade 12(IGCSE)">Grade 12 (IGCSE)</option>
+           </select>
+
+
+            <div class="label"><strong>Subjects:</strong> (tick)</div>
+            <div class="grades">
+              <label class="grade-box"><input name="subjects" type="checkbox" value="English"> English </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Science"> Science </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Computer"> Computer </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Mathematics"> Mathematics </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Social Studies"> Social Studies </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Urdu"> Urdu </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Islamic"> Islamic </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Biology"> Biology </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Chemistry"> Chemistry </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Physics"> Physics </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Geography"> Geography </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="History"> History </label>
+            </div>
+
+            <div style="margin-top:8px">
+              <input id="igcse_text" class="input" placeholder="If Any Other Subjects, please Specify here.">
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>ADDRESS DETAIL</h3>
+          <div class="content">
+            <div class="grid">
+              <div><div class="label">Present Address</div><textarea id="addr" class="textarea"></textarea></div>
+            </div>
+            <div class="grid cols-3">
+              <div><div class="label">The City</div><input id="city" class="input"></div>
+              <div><div class="label">Present State</div><input id="state" class="input"></div>
+              <div><div class="label">Zip Code</div><input id="zip" class="input"></div>
+            </div>
+            <div class="grid cols-2">
+              <div><div class="label">Guardian Contact</div><input id="gContact" class="input"></div>
+              <div><div class="label">Secondary Contact</div><input id="sContact" class="input"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================= PAGE 2 ================= -->
+      <!-- =============== PAGE 2 = INVOICE ================= -->
+<div class="page" id="page2">
+  <h1 class="title" style="text-align:center;">FEE INVOICE</h1>
+  <div style="text-align:right; font-weight:600;">No. <span id="invoiceNo"></span></div>
+
+  <div style="margin-top:15px; line-height:1.8;">
+    <p><strong>Father / Mother Name:</strong> <span id="parentName"></span></p>
+    <p><strong>Issued on:</strong> <span id="issuedOn"></span></p>
+    <!-- <p><strong>Due on:</strong> <span id="dueOn"></span></p> -->
+    <p><strong>F.Code:</strong> <b>New Admission</b></p>
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; margin-top:25px; text-align:center;">
+    <thead style="background:#253a77; color:#fff;">
+      <tr>
+        <th style="padding:8px;">Reg No</th>
+        <th style="padding:8px;">Description</th>
+        <th style="padding:8px;">Month</th>
+        <th style="padding:8px;">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>N-AD</td>
+        <td>Admission Fee <span id="studentFor"></span></td>
+        <td><span id="monthYear"></span></td>
+        <td><span id="invoiceAmount"></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="text-align:right; margin-top:25px;">
+    Total Amount: <span id="totalAmount"></span> SAR/AED
+  </h3>
+ <div class="signature" style="margin-top:50px;">
+    <div class="sig-row" style="text-align:center;">
+      <div class="sig-col" style="display:inline-block;">
+        <div class="label">Signature of Parent/Guardian (draw here)</div>
+        <canvas id="sig" width="480" height="140" style="border:1px dashed #aaa; border-radius:6px;"></canvas>
+        <div class="sig-actions" style="margin-top:10px;">
+          <button id="clearSig" type="button" class="btn secondary">Clear Signature</button>
+        </div>
+      </div>
+
+      <div class="actions hide-in-pdf" style="margin-top:30px;">
+        <button id="btnPdf" class="btn" type="button">Save filled form as PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+ 
+
+  <script src="script.js" defer></script>
+
+  <script>
+  (function initDateBoxes(){
+    const container = document.getElementById('regBoxes');
+    if (!container) return;
+    const boxes  = Array.from(container.querySelectorAll('.box'));
+    const hidden = document.getElementById('regDate');
+
+    function normalize(){
+      const v = boxes.map(b => (b.value || '').replace(/\D/g,'')).join('');
+      if (v.length === 8) {
+        const mm = v.slice(0,2), dd = v.slice(2,4), yyyy = v.slice(4,8);
+        hidden.value = yyyy + '-' + mm + '-' + dd;
+      } else {
+        hidden.value = '';
+      }
+    }
+
+    boxes.forEach((b) => {
+      b.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g,'').slice(0,1);
+        if (e.target.value && b.dataset.next) {
+          const nx = document.getElementById(b.dataset.next);
+          if (nx) nx.focus();
+        }
+        normalize();
+      });
+
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !b.value && b.dataset.prev) {
+          const pv = document.getElementById(b.dataset.prev);
+          if (pv) pv.focus();
+        }
+      });
+
+      b.addEventListener('paste', (e) => {
+        const text = (e.clipboardData || window.clipboardData)
+          .getData('text').replace(/\D/g,'').slice(0,8);
+        if (!text) return;
+        e.preventDefault();
+        for (let i = 0; i < text.length && i < boxes.length; i++) boxes[i].value = text[i];
+        normalize();
+        boxes[Math.min(text.length, boxes.length - 1)].focus();
+      });
+    });
+  })();
+  </script>
+
+  <nav class="info-bar" role="contentinfo">
+    <div class="info-wrap">
+      <span><strong>Administration Contact/WhatsApp # :</strong> +92 335 524 5551</span>
+      <!-- <span><strong>Web:</strong> www.iqravirtualschool.com</span> -->
+      <!-- <span><strong>E-mail:</strong> acivs2021@gmail.com</span> -->
+    </div>
+  </nav>
+</body>
+</html>
