@@ -285,6 +285,17 @@ function updateInvoice() {
   const grade       = document.getElementById("grade")?.value || "";
   const selectedSubjects = Array.from(document.querySelectorAll('input[name="subjects"]:checked'));
 
+  // 🆕 Other Subjects handle کرنے کے لیے
+  const otherSubjectsInput = document.getElementById("igcse_text");
+  let otherSubjectsCount = 0;
+  if (otherSubjectsInput) {
+    const others = otherSubjectsInput.value
+      .split(",")
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+    otherSubjectsCount = others.length;
+  }
+
   // اگر grade منتخب نہیں تو invoice صاف رکھیں
   if (!grade) {
     document.getElementById("invoiceNo").textContent = "";
@@ -301,8 +312,10 @@ function updateInvoice() {
   const monthYear = today.toLocaleString("en-GB", { month:"short", year:"numeric" });
   const invoiceNo = Math.floor(100000 + Math.random() * 900000);
   
-  // Fee Calculation
-  const totalAmount = calculateFee(grade, selectedSubjects);
+ // 💰 Fee Calculation (main change)
+  const totalAmount =
+    calculateFee(grade, selectedSubjects) +
+    calculateFee(grade, Array(otherSubjectsCount).fill('extra'));
 
   // Fill invoice fields live
   document.getElementById("invoiceNo").textContent = invoiceNo;
@@ -332,9 +345,12 @@ document.addEventListener("DOMContentLoaded", () => {
     cb.addEventListener("change", updateInvoice);
   });
 
+  // 🆕 Listen on other subjects input
+const otherSubjectsInput = document.getElementById("igcse_text");
+if (otherSubjectsInput) {
+  otherSubjectsInput.addEventListener("input", updateInvoice);
+  otherSubjectsInput.addEventListener("change", updateInvoice);
+}
   // Initial fill (in case of reload)
   updateInvoice();
 });
-
-
-
