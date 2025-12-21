@@ -26,10 +26,18 @@ app.get("/", (req, res) => {
 app.post("/api/forms", async (req, res) => {
   try {
     const payload = req.body;
+      // ✅ Respond back to frontend
+    res.json({ ok: true, message: "Form received" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ ok: false, error: "server error" });
+  }
+});
 
 /* ------------------ SERVER STARTUP ------------------ */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`🚀 Server running at: http://localhost:${PORT}`)
 );
+
 
