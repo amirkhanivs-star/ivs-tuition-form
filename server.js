@@ -3,7 +3,6 @@ import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
-// import fetch from "node-fetch"; // ✅ Used to send data to n8n webhook
 import { fileURLToPath } from "url";
 
 dotenv.config();
@@ -28,47 +27,9 @@ app.post("/api/forms", async (req, res) => {
   try {
     const payload = req.body;
 
-    // // ✅ Validate required fields
-    // if (!payload?.studentName || !payload?.signatureDataUrl) {
-    //   return res
-    //     .status(400)
-    //     .json({ error: "studentName and signature are required" });
-    // }
-
-    // // ✅ Send data to n8n webhook
-    // try {
-    //   const webhookUrl =
-    //     ".....................................................";
-
-    //   await fetch(webhookUrl, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       studentName: payload.studentName,
-    //       grade: payload.grade,
-    //       dob: payload.dob,
-    //       guardianWhatsapp: payload.guardianWhatsapp,
-    //       email: payload.email,
-    //       regDate: payload.regDate,
-    //       signatureDataUrl: payload.signatureDataUrl,
-    //     }),
-    //   });
-
-    //   console.log("✅ Data successfully sent to n8n webhook");
-    // } catch (err) {
-    //   console.error("⚠️ Webhook send failed:", err.message);
-    // }
-
-    // ✅ Respond back to frontend
-    res.json({ ok: true, message: "Form received and no webhook." });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ ok: false, error: "server error" });
-  }
-});
-
 /* ------------------ SERVER STARTUP ------------------ */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`🚀 Server running at: http://localhost:${PORT}`)
 );
+
