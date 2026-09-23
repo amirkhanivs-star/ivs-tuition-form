@@ -216,8 +216,9 @@ async function exportPdfAndOpenWhatsAppApp() {
 
 /* ---------- LIVE INVOICE AUTO-FILL (updates while user fills page 1) ---------- */
 const gradeFee = {
-  "KG-1": 120,
-  "KG-2": 120,
+  "FS-1": 120,
+  "FS-2": 120,
+  "FS-3": 120,
   "Grade 1": 120,
   "Grade 2": 120,
   "Grade 3": 130,
@@ -233,8 +234,11 @@ const gradeFee = {
   "Grade 8(IGCSE)": 180,
   "Grade 9(IGCSE)": 250,
   "Grade 10(IGCSE)": 250,
-  "Grade 11(IGCSE)": 250,
-  "Grade 12(IGCSE)": 250,
+  "A -Level (IGCSE)": 250,
+  "A -Level (Edxcel)": 250,
+  "A's -Level (IGCSE)": 250,
+  "A's -Level (Edxcel)": 250,
+  "GED": 250,
 };
 
 // 🔹 حساب لگانے والا فنکشن

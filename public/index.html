@@ -80,8 +80,9 @@
            <div class="label">Grade:</div>
             <select id="grade" name="grade" class="input" style="margin-bottom:10px;">
              <option value="">Select Grade</option>
-             <option value="KG-1">KG-1</option>
-             <option value="KG-2">KG-2</option>
+             <option value="FS-1">FS-1</option>
+             <option value="FS-2">FS-2</option>
+             <option value="FS-3">FS-3</option>
              <option value="Grade 1">Grade 1</option>
              <option value="Grade 2">Grade 2</option>
              <option value="Grade 3">Grade 3</option>
@@ -96,14 +97,19 @@
              <option value="Grade 10(Fed)">Grade 10 (Fed)</option>
              <option value="Grade 10(IGCSE)">Grade 10 (IGCSE)</option>
              <option value="Grade 11(Fed)">Grade 11 (Fed)</option>
-             <option value="Grade 11(IGCSE)">Grade 11 (IGCSE)</option>
+             <option value="A -Level (IGCSE)">A -Level (IGCSE)</option>
+             <option value="A -Level (Edxcel)">A -Level (Edxcel)</option>
+             <option value="A's -Level (IGCSE)">A's -Level (IGCSE)</option>
+             <option value="A's -Level (Edxcel)">A's -Level (Edxcel)</option>
              <option value="Grade 12(Fed)">Grade 12 (Fed)</option>
-             <option value="Grade 12(IGCSE)">Grade 12 (IGCSE)</option>
+             <option value="GED">GED</option>
            </select>
 
 
             <div class="label"><strong>Subjects:</strong> (tick)</div>
-            <div class="grades">
+
+            <!-- Normal subjects for all grades except GED -->
+            <div class="grades" id="normalSubjects">
               <label class="grade-box"><input name="subjects" type="checkbox" value="English"> English </label>
               <label class="grade-box"><input name="subjects" type="checkbox" value="Science"> Science </label>
               <label class="grade-box"><input name="subjects" type="checkbox" value="Computer"> Computer </label>
@@ -118,7 +124,15 @@
               <label class="grade-box"><input name="subjects" type="checkbox" value="History"> History </label>
             </div>
 
-            <div style="margin-top:8px">
+            <!-- GED has only these four subjects -->
+            <div class="grades" id="gedSubjects" style="display:none;">
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Reasoning Through Language Arts (English)"> Reasoning Through Language Arts (English) </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Social"> Social </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Math"> Math </label>
+              <label class="grade-box"><input name="subjects" type="checkbox" value="Science"> Science </label>
+            </div>
+
+            <div id="otherSubjectsWrap" style="margin-top:8px">
               <input id="igcse_text" class="input" placeholder="If Any Other Subjects, please Specify here.">
             </div>
           </div>
@@ -245,6 +259,58 @@
         boxes[Math.min(text.length, boxes.length - 1)].focus();
       });
     });
+  })();
+  </script>
+
+
+  <script>
+  // Direct GED condition.
+  // GED = only 4 GED subjects. All other grades = normal subject list.
+  (function () {
+    const gradeSelect = document.getElementById("grade");
+    const normalSubjects = document.getElementById("normalSubjects");
+    const gedSubjects = document.getElementById("gedSubjects");
+    const otherSubjectsWrap = document.getElementById("otherSubjectsWrap");
+    const otherSubjectsInput = document.getElementById("igcse_text");
+
+    if (!gradeSelect || !normalSubjects || !gedSubjects) return;
+
+    function uncheckGroup(group) {
+      group.querySelectorAll('input[name="subjects"]').forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+    }
+
+    function applyGradeSubjects() {
+      const isGED = gradeSelect.value === "GED";
+
+      if (isGED) {
+        // Clear normal-grade selections so hidden subjects are not counted.
+        uncheckGroup(normalSubjects);
+
+        normalSubjects.style.display = "none";
+        gedSubjects.style.display = "";
+
+        if (otherSubjectsInput) otherSubjectsInput.value = "";
+        if (otherSubjectsWrap) otherSubjectsWrap.style.display = "none";
+      } else {
+        // Clear GED selections when leaving GED.
+        uncheckGroup(gedSubjects);
+
+        normalSubjects.style.display = "";
+        gedSubjects.style.display = "none";
+
+        if (otherSubjectsWrap) otherSubjectsWrap.style.display = "";
+      }
+
+      // Recalculate the invoice after the grade changes.
+      if (typeof window.updateInvoice === "function") {
+        window.updateInvoice();
+      }
+    }
+
+    gradeSelect.addEventListener("change", applyGradeSubjects);
+    applyGradeSubjects();
   })();
   </script>
 
